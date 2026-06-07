@@ -1,1 +1,197 @@
-placeholder
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rivvak Hub — Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--text-xs:clamp(0.75rem,0.7rem+0.25vw,0.875rem);--text-sm:clamp(0.875rem,0.8rem+0.35vw,1rem);--text-base:clamp(1rem,0.95rem+0.25vw,1.125rem);--text-lg:clamp(1.125rem,1rem+0.75vw,1.5rem);--text-xl:clamp(1.5rem,1.2rem+1.25vw,2.25rem);--space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;--space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;--space-12:3rem;--space-16:4rem;--radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;--transition:180ms cubic-bezier(0.16,1,0.3,1);--font-body:"DM Sans","Helvetica Neue",sans-serif;--font-mono:"DM Mono","Courier New",monospace;}
+[data-theme="dark"]{--bg:#0e0d0b;--surface:#141310;--surface-2:#1a1917;--surface-offset:#202019;--border:oklch(0.9 0 0/0.08);--divider:oklch(0.9 0 0/0.05);--text:#e8e6e1;--text-muted:#8a8880;--text-faint:#4a4946;--primary:#d4a853;--primary-hover:#e8bc68;--success:#6daa45;--error:#d163a7;--blue:#5591c7;--orange:#fdab43;--shadow-sm:0 1px 3px oklch(0 0 0/.4);--shadow-md:0 4px 16px oklch(0 0 0/.5);}
+[data-theme="light"]{--bg:#f8f6f0;--surface:#faf9f5;--surface-2:#fdfcfa;--surface-offset:#f2efe8;--border:oklch(0.2 0.02 80/0.1);--divider:oklch(0.2 0.02 80/0.06);--text:#1a1814;--text-muted:#6b6860;--text-faint:#b8b6b0;--primary:#a07820;--primary-hover:#8a6318;--success:#437a22;--error:#a12c7b;--blue:#006494;--orange:#da7101;--shadow-sm:0 1px 3px oklch(0.2 0.02 80/.08);--shadow-md:0 4px 16px oklch(0.2 0.02 80/.1);}
+html{-webkit-font-smoothing:antialiased;height:100%}
+body{font-family:var(--font-body);font-size:var(--text-sm);color:var(--text);background:var(--bg);height:100%;overflow:hidden;display:flex;flex-direction:column}
+button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:var(--radius-sm)}
+.app{display:flex;height:100dvh;overflow:hidden}
+.sidebar{width:220px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100%;overflow:hidden}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:56px;flex-shrink:0;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 var(--space-6);background:var(--surface);gap:var(--space-4)}
+.content{flex:1;overflow-y:auto;padding:var(--space-6)}
+.sidebar-header{padding:var(--space-4) var(--space-4) var(--space-2);display:flex;align-items:center;gap:var(--space-2);font-weight:600;letter-spacing:-0.01em;border-bottom:1px solid var(--divider);margin-bottom:var(--space-2)}
+.nav-section{padding:var(--space-2)}
+.nav-section-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-faint);padding:var(--space-1) var(--space-2);margin-bottom:var(--space-1)}
+.nav-item{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-2) var(--space-3);border-radius:var(--radius-md);color:var(--text-muted);font-size:var(--text-sm);transition:all var(--transition);cursor:pointer}
+.nav-item:hover,.nav-item.active{color:var(--text);background:var(--surface-offset)}
+.nav-item svg{width:16px;height:16px;flex-shrink:0}
+.nav-badge{margin-left:auto;font-size:0.65rem;background:var(--primary);color:var(--bg);border-radius:var(--radius-full);padding:0.1em 0.5em;font-weight:600}
+.sidebar-footer{margin-top:auto;padding:var(--space-4);border-top:1px solid var(--divider)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--success);flex-shrink:0}
+.topbar-title{font-weight:600;font-size:var(--text-base)}
+.topbar-actions{display:flex;align-items:center;gap:var(--space-3)}
+.topbar-btn{display:inline-flex;align-items:center;gap:var(--space-2);padding:0.4em 0.9em;border:1px solid var(--border);border-radius:var(--radius-full);font-size:var(--text-xs);color:var(--text-muted);transition:all var(--transition)}
+.topbar-btn:hover{color:var(--text);border-color:oklch(from var(--text) l c h/0.2)}
+.topbar-btn.primary{background:var(--primary);color:var(--bg);border-color:transparent}
+.topbar-btn.primary:hover{background:var(--primary-hover)}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);margin-bottom:var(--space-6)}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-5)}
+.kpi-label{font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:var(--space-2)}
+.kpi-value{font-size:var(--text-xl);font-weight:300;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;line-height:1}
+.kpi-delta{font-size:var(--text-xs);margin-top:var(--space-2)}
+.delta-up{color:var(--success)}
+.delta-down{color:var(--error)}
+.main-grid{display:grid;grid-template-columns:1fr 320px;gap:var(--space-4)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg)}
+.card-header{padding:var(--space-4) var(--space-5);border-bottom:1px solid var(--divider);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-weight:600;font-size:var(--text-sm)}
+.card-body{padding:var(--space-4) var(--space-5)}
+.card-action{font-size:var(--text-xs);color:var(--primary);cursor:pointer}
+.project-item{display:flex;align-items:center;gap:var(--space-4);padding:var(--space-3) 0;border-bottom:1px solid var(--divider)}
+.project-item:last-child{border-bottom:none}
+.project-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.project-info{flex:1;min-width:0}
+.project-name{font-weight:500;font-size:var(--text-sm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.project-meta{font-size:var(--text-xs);color:var(--text-muted)}
+.project-status{font-size:var(--text-xs);padding:0.2em 0.6em;border-radius:var(--radius-full)}
+.status-active{background:oklch(from var(--success) l c h/0.15);color:var(--success)}
+.status-review{background:oklch(from var(--primary) l c h/0.15);color:var(--primary)}
+.status-done{background:oklch(from var(--text-muted) l c h/0.1);color:var(--text-muted)}
+.status-paused{background:oklch(from var(--orange) l c h/0.15);color:var(--orange)}
+.income-table{width:100%;border-collapse:collapse}
+.income-table th{font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.06em;color:var(--text-faint);text-align:left;padding:var(--space-2);border-bottom:1px solid var(--divider)}
+.income-table td{padding:var(--space-3) var(--space-2);border-bottom:1px solid var(--divider);font-size:var(--text-sm);font-variant-numeric:tabular-nums}
+.income-table tr:last-child td{border-bottom:none}
+.income-table tr:hover td{background:var(--surface-offset)}
+.activity-item{display:flex;gap:var(--space-3);padding:var(--space-3) 0;border-bottom:1px solid var(--divider)}
+.activity-item:last-child{border-bottom:none}
+.activity-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.activity-icon svg{width:13px;height:13px}
+.activity-text{font-size:var(--text-xs);line-height:1.5;color:var(--text-muted)}
+.activity-text strong{color:var(--text);font-weight:500}
+.activity-time{font-size:0.65rem;color:var(--text-faint);margin-top:2px;font-family:var(--font-mono)}
+.chart-bars{display:flex;align-items:flex-end;gap:var(--space-2);height:80px;padding:var(--space-2) 0}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:var(--space-1)}
+.bar{width:100%;border-radius:var(--radius-sm) var(--radius-sm) 0 0;background:var(--surface-offset);transition:background var(--transition);cursor:pointer}
+.bar.current{background:var(--primary)}
+.bar:hover{background:var(--primary-hover)}
+.bar-label{font-size:0.6rem;color:var(--text-faint);font-family:var(--font-mono)}
+@media(max-width:900px){.sidebar{display:none}.kpi-grid{grid-template-columns:repeat(2,1fr)}.main-grid{grid-template-columns:1fr}}
+@media(max-width:540px){.kpi-grid{grid-template-columns:1fr 1fr}.content{padding:var(--space-4)}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" fill="currentColor"/><rect x="16" y="2" width="10" height="10" rx="2" fill="currentColor" opacity="0.6"/><rect x="2" y="16" width="10" height="10" rx="2" fill="currentColor" opacity="0.6"/><rect x="16" y="16" width="10" height="10" rx="2" fill="currentColor" opacity="0.3"/></svg>
+      Rivvak Hub
+    </div>
+    <nav class="nav-section">
+      <div class="nav-section-label">Main</div>
+      <div class="nav-item active" onclick="setView('dashboard',this)" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</div>
+      <div class="nav-item" onclick="setView('projects',this)" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Projects<span class="nav-badge">6</span></div>
+      <div class="nav-item" onclick="setView('income',this)" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Income</div>
+      <div class="nav-item" onclick="setView('tools',this)" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Tools</div>
+      <div class="nav-section-label" style="margin-top:1rem">Resources</div>
+      <div class="nav-item" onclick="setView('playbooks',this)" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Playbooks</div>
+      <div class="nav-item" onclick="setView('clients',this)" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Clients</div>
+    </nav>
+    <div class="sidebar-footer">
+      <div style="display:flex;align-items:center;gap:.5rem;font-size:var(--text-xs);color:var(--text-muted)"><span class="status-dot"></span>All systems go</div>
+      <div style="margin-top:.75rem"><button class="topbar-btn" data-theme-toggle style="width:100%;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Toggle theme</button></div>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-title" id="viewTitle">Dashboard</div>
+      <div class="topbar-actions">
+        <span style="font-size:var(--text-xs);color:var(--text-muted);font-family:var(--font-mono)" id="clock"></span>
+        <a href="mailto:hello@rivvak.com" class="topbar-btn primary">+ New Project</a>
+      </div>
+    </header>
+    <main class="content" id="mainContent">
+      <div id="view-dashboard">
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-label">Revenue this month</div><div class="kpi-value" id="kpiRev">$0</div><div class="kpi-delta delta-up">▲ 23% vs last month</div></div>
+          <div class="kpi-card"><div class="kpi-label">Active projects</div><div class="kpi-value" id="kpiProj">0</div><div class="kpi-delta delta-up">▲ 2 new this week</div></div>
+          <div class="kpi-card"><div class="kpi-label">Hours billed</div><div class="kpi-value" id="kpiHrs">0</div><div class="kpi-delta" style="color:var(--text-muted)">40 cap / month</div></div>
+          <div class="kpi-card"><div class="kpi-label">Pipeline value</div><div class="kpi-value" id="kpiPipe">$0</div><div class="kpi-delta delta-up">▲ 3 leads active</div></div>
+        </div>
+        <div class="main-grid">
+          <div>
+            <div class="card" style="margin-bottom:1rem">
+              <div class="card-header"><span class="card-title">Active Projects</span><span class="card-action" onclick="setView('projects',document.querySelector('[onclick*=projects]'))">View all →</span></div>
+              <div class="card-body" style="padding:0 1.25rem">
+                <div class="project-item"><span class="project-dot" style="background:var(--success)"></span><div class="project-info"><div class="project-name">Strivve Media — Dashboard</div><div class="project-meta">React · PostgreSQL · Due Jun 20</div></div><span class="project-status status-active">Active</span></div>
+                <div class="project-item"><span class="project-dot" style="background:var(--primary)"></span><div class="project-info"><div class="project-name">AI Chatbot — E-commerce</div><div class="project-meta">OpenAI · Telegram · Due Jun 28</div></div><span class="project-status status-review">Review</span></div>
+                <div class="project-item"><span class="project-dot" style="background:var(--blue)"></span><div class="project-info"><div class="project-name">Landing Page — SaaS Client</div><div class="project-meta">Next.js · Vercel · Due Jul 3</div></div><span class="project-status status-active">Active</span></div>
+                <div class="project-item"><span class="project-dot" style="background:var(--orange)"></span><div class="project-info"><div class="project-name">Telegram Bot — Membership</div><div class="project-meta">Telegraf · Stripe · Paused</div></div><span class="project-status status-paused">Paused</span></div>
+                <div class="project-item"><span class="project-dot" style="background:var(--text-faint)"></span><div class="project-info"><div class="project-name">API Integration — Shopify</div><div class="project-meta">Node.js · REST · Completed</div></div><span class="project-status status-done">Done</span></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Revenue — Last 6 Months</span><span style="font-size:var(--text-xs);color:var(--text-muted);font-family:var(--font-mono)">USD</span></div>
+              <div class="card-body">
+                <div class="chart-bars">
+                  <div class="bar-wrap"><div class="bar" style="height:45%" title="Jan $2,200"></div><div class="bar-label">Jan</div></div>
+                  <div class="bar-wrap"><div class="bar" style="height:62%" title="Feb $3,100"></div><div class="bar-label">Feb</div></div>
+                  <div class="bar-wrap"><div class="bar" style="height:38%" title="Mar $1,900"></div><div class="bar-label">Mar</div></div>
+                  <div class="bar-wrap"><div class="bar" style="height:78%" title="Apr $3,900"></div><div class="bar-label">Apr</div></div>
+                  <div class="bar-wrap"><div class="bar" style="height:55%" title="May $2,750"></div><div class="bar-label">May</div></div>
+                  <div class="bar-wrap"><div class="bar current" style="height:90%" title="Jun $4,500"></div><div class="bar-label">Jun</div></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--divider)"><span style="font-size:var(--text-xs);color:var(--text-muted)">6-month total</span><span style="font-size:var(--text-sm);font-weight:600;font-family:var(--font-mono)">$18,350</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:1rem">
+            <div class="card">
+              <div class="card-header"><span class="card-title">Recent Activity</span></div>
+              <div class="card-body" style="padding:0 1.25rem">
+                <div class="activity-item"><div class="activity-icon" style="background:oklch(from var(--success) l c h/0.15);color:var(--success)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="activity-text"><strong>Payment received</strong> — Strivve Media $750 deposit</div><div class="activity-time">2h ago</div></div></div>
+                <div class="activity-item"><div class="activity-icon" style="background:oklch(from var(--blue) l c h/0.15);color:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><div class="activity-text"><strong>New lead</strong> — SaaS client requested landing page quote</div><div class="activity-time">5h ago</div></div></div>
+                <div class="activity-item"><div class="activity-icon" style="background:oklch(from var(--primary) l c h/0.15);color:var(--primary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div><div><div class="activity-text"><strong>Deployed</strong> — Shopify API integration live</div><div class="activity-time">Yesterday</div></div></div>
+                <div class="activity-item"><div class="activity-icon" style="background:oklch(from var(--orange) l c h/0.15);color:var(--orange)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><div class="activity-text"><strong>Follow-up needed</strong> — Telegram bot client unresponsive</div><div class="activity-time">2d ago</div></div></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Quick Actions</span></div>
+              <div class="card-body" style="display:flex;flex-direction:column;gap:.5rem">
+                <a href="mailto:hello@rivvak.com" class="topbar-btn" style="justify-content:flex-start;border-radius:var(--radius-md)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Send client email</a>
+                <a href="https://github.com/mrh0ql" target="_blank" rel="noopener noreferrer" class="topbar-btn" style="justify-content:flex-start;border-radius:var(--radius-md)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>Open GitHub</a>
+                <a href="index.html" class="topbar-btn" style="justify-content:flex-start;border-radius:var(--radius-md)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View landing page</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="view-projects" style="display:none"><h2 style="font-size:var(--text-xl);font-weight:300;margin-bottom:1.5rem">Projects</h2><div class="card"><div class="card-body" style="text-align:center;padding:4rem;color:var(--text-muted)">Full project management — coming soon.</div></div></div>
+      <div id="view-income" style="display:none">
+        <h2 style="font-size:var(--text-xl);font-weight:300;margin-bottom:1.5rem">Income Tracker</h2>
+        <div class="card"><div class="card-body" style="padding:0"><table class="income-table"><thead><tr><th>Client</th><th>Service</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead><tbody>
+          <tr><td>Strivve Media</td><td>Dashboard Build</td><td style="font-family:var(--font-mono)">$1,500</td><td>Jun 4</td><td><span class="project-status status-active">Partial</span></td></tr>
+          <tr><td>E-comm Client</td><td>AI Chatbot</td><td style="font-family:var(--font-mono)">$800</td><td>May 28</td><td><span class="project-status status-review">Invoiced</span></td></tr>
+          <tr><td>SaaS Startup</td><td>Landing Page</td><td style="font-family:var(--font-mono)">$400</td><td>May 15</td><td><span class="project-status status-done">Paid</span></td></tr>
+          <tr><td>Shopify Store</td><td>API Integration</td><td style="font-family:var(--font-mono)">$600</td><td>Apr 30</td><td><span class="project-status status-done">Paid</span></td></tr>
+          <tr><td>Retainer Client</td><td>Monthly Retainer</td><td style="font-family:var(--font-mono)">$700</td><td>Apr 1</td><td><span class="project-status status-done">Paid</span></td></tr>
+        </tbody></table></div></div>
+      </div>
+      <div id="view-tools" style="display:none"><h2 style="font-size:var(--text-xl);font-weight:300;margin-bottom:1.5rem">Tools</h2><div class="card"><div class="card-body" style="text-align:center;padding:4rem;color:var(--text-muted)">Tools &amp; integrations — coming soon.</div></div></div>
+      <div id="view-playbooks" style="display:none"><h2 style="font-size:var(--text-xl);font-weight:300;margin-bottom:1.5rem">Playbooks</h2><div class="card"><div class="card-body" style="text-align:center;padding:4rem;color:var(--text-muted)">Playbooks &amp; SOPs — coming soon.</div></div></div>
+      <div id="view-clients" style="display:none"><h2 style="font-size:var(--text-xl);font-weight:300;margin-bottom:1.5rem">Clients</h2><div class="card"><div class="card-body" style="text-align:center;padding:4rem;color:var(--text-muted)">Client CRM — coming soon.</div></div></div>
+    </main>
+  </div>
+</div>
+<script>
+(function(){const ts=document.querySelectorAll('[data-theme-toggle]'),r=document.documentElement;let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';r.setAttribute('data-theme',d);ts.forEach(t=>t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d)}))})();
+function updateClock(){const n=new Date(),h=n.getHours().toString().padStart(2,'0'),m=n.getMinutes().toString().padStart(2,'0');document.getElementById('clock').textContent=h+':'+m}updateClock();setInterval(updateClock,10000);
+function animCount(id,target,prefix){const el=document.getElementById(id);let c=0;const t=setInterval(()=>{c=Math.min(c+Math.ceil(target/60),target);el.textContent=(prefix||'')+c.toLocaleString();if(c>=target)clearInterval(t)},16)}setTimeout(()=>{animCount('kpiRev',4500,'$');animCount('kpiProj',4,'');animCount('kpiHrs',32,'');document.getElementById('kpiHrs').textContent='32h';animCount('kpiPipe',6800,'$')},200);
+function setView(v,el){document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));if(el)el.classList.add('active');document.querySelectorAll('[id^="view-"]').forEach(e=>e.style.display='none');const ve=document.getElementById('view-'+v);if(ve)ve.style.display='';const titles={dashboard:'Dashboard',projects:'Projects',income:'Income Tracker',tools:'Tools',playbooks:'Playbooks',clients:'Clients'};document.getElementById('viewTitle').textContent=titles[v]||v;}
+document.querySelectorAll('.nav-item').forEach(item=>item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')item.click()}));
+</script>
+</body>
+</html>
