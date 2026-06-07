@@ -1,1 +1,440 @@
-<!-- rivvak-ai placeholder - full HTML in rivvak-ai repo -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rivvak AI — Intelligent Automations for Serious Builders</title>
+<meta name="description" content="Custom AI automations, intelligent bots, and workflow systems built by Rivvak. Stop doing manually what machines can do better.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', 'Fira Code', monospace;
+  --text-xs:   clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+  --text-3xl:  clamp(2.5rem, 1rem + 4vw, 5rem);
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem;
+  --space-12: 3rem; --space-16: 4rem; --space-20: 5rem; --space-24: 6rem;
+  --radius-sm: 0.375rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
+  --radius-xl: 1rem; --radius-full: 9999px;
+  --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --content-narrow: 640px; --content-default: 960px; --content-wide: 1200px;
+}
+[data-theme="dark"] {
+  --bg: #0d0d0b;
+  --surface: #131311;
+  --surface-2: #181816;
+  --surface-3: #1e1e1b;
+  --border: rgba(255,255,255,0.07);
+  --divider: rgba(255,255,255,0.05);
+  --text: #e8e6e0;
+  --text-muted: #7a7870;
+  --text-faint: #3d3c38;
+  --accent: #c8a96e;
+  --accent-hover: #dfc08a;
+  --accent-dim: rgba(200,169,110,0.12);
+  --accent-glow: rgba(200,169,110,0.06);
+  --green: #4a9e6b;
+  --green-dim: rgba(74,158,107,0.12);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.6);
+}
+[data-theme="light"] {
+  --bg: #f7f6f1;
+  --surface: #faf9f5;
+  --surface-2: #ffffff;
+  --surface-3: #f2f0ea;
+  --border: rgba(0,0,0,0.08);
+  --divider: rgba(0,0,0,0.05);
+  --text: #1a1914;
+  --text-muted: #6b6960;
+  --text-faint: #c0bdb5;
+  --accent: #9a6f2e;
+  --accent-hover: #7a5520;
+  --accent-dim: rgba(154,111,46,0.1);
+  --accent-glow: rgba(154,111,46,0.05);
+  --green: #2d7a4a;
+  --green-dim: rgba(45,122,74,0.1);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--space-16); -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: var(--text-base); color: var(--text); background: var(--bg); line-height: 1.65; min-height: 100dvh; }
+img, svg { display: block; max-width: 100%; }
+button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+h1,h2,h3,h4 { text-wrap: balance; line-height: 1.15; font-family: var(--font-display); }
+p, li { text-wrap: pretty; max-width: 68ch; }
+::selection { background: var(--accent-dim); color: var(--text); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+.container { max-width: var(--content-default); margin-inline: auto; padding-inline: var(--space-6); }
+.container--wide { max-width: var(--content-wide); margin-inline: auto; padding-inline: var(--space-6); }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: var(--space-4) var(--space-6);
+  display: flex; align-items: center; justify-content: space-between;
+  background: oklch(from var(--bg) l c h / 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+.nav-logo { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); font-weight: 600; letter-spacing: -0.01em; }
+.nav-logo svg { color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: var(--space-8); }
+.nav-links a { font-size: var(--text-sm); color: var(--text-muted); transition: color var(--transition); }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { display: flex; align-items: center; gap: var(--space-3); }
+.btn { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-5); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 500; transition: all var(--transition); }
+.btn-primary { background: var(--accent); color: #0d0d0b; }
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(200,169,110,0.3); }
+.btn-ghost { border: 1px solid var(--border); color: var(--text-muted); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+[data-theme-toggle] { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-full); border: 1px solid var(--border); color: var(--text-muted); transition: all var(--transition); }
+[data-theme-toggle]:hover { color: var(--accent); border-color: var(--accent); }
+.hamburger { display: none; flex-direction: column; gap: 5px; padding: var(--space-2); }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--text-muted); border-radius: 2px; transition: all var(--transition); }
+@media (max-width: 768px) {
+  .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: var(--space-1); padding: var(--space-4); background: var(--surface); border-bottom: 1px solid var(--border); }
+  .nav-links.open { display: flex; }
+  .hamburger { display: flex; }
+  .nav-cta .btn-ghost { display: none; }
+}
+.hero {
+  min-height: 100dvh; display: flex; align-items: center;
+  padding-top: 80px;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 40%, rgba(200,169,110,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 20% 70%, rgba(74,158,107,0.05) 0%, transparent 50%);
+}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 70%);
+}
+.hero-inner { position: relative; z-index: 1; padding: var(--space-20) 0; }
+.hero-badge { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-1) var(--space-4); border-radius: var(--radius-full); border: 1px solid rgba(200,169,110,0.25); background: var(--accent-dim); font-size: var(--text-xs); color: var(--accent); font-weight: 500; margin-bottom: var(--space-6); letter-spacing: 0.05em; text-transform: uppercase; }
+.hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+.hero h1 { font-size: var(--text-3xl); font-weight: 400; letter-spacing: -0.02em; margin-bottom: var(--space-6); line-height: 1.1; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-sub { font-size: var(--text-lg); color: var(--text-muted); margin-bottom: var(--space-10); max-width: 52ch; line-height: 1.6; }
+.hero-actions { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+.btn-large { padding: var(--space-3) var(--space-8); font-size: var(--text-base); }
+.hero-proof { margin-top: var(--space-16); padding-top: var(--space-8); border-top: 1px solid var(--divider); display: flex; gap: var(--space-8); flex-wrap: wrap; }
+.hero-stat .num { font-family: var(--font-display); font-size: var(--text-xl); color: var(--accent); }
+.hero-stat .label { font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+section { padding-block: clamp(var(--space-12), 8vw, var(--space-24)); }
+.section-label { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; margin-bottom: var(--space-3); }
+.section-title { font-size: var(--text-2xl); font-weight: 400; letter-spacing: -0.02em; margin-bottom: var(--space-4); }
+.section-sub { font-size: var(--text-base); color: var(--text-muted); max-width: 52ch; margin-bottom: var(--space-12); line-height: 1.7; }
+.usecases { background: var(--surface); }
+.usecases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: var(--space-4); }
+.usecase-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: var(--space-6); transition: all var(--transition); }
+.usecase-card:hover { border-color: rgba(200,169,110,0.2); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.usecase-icon { width: 40px; height: 40px; margin-bottom: var(--space-4); color: var(--accent); }
+.usecase-card h3 { font-size: var(--text-base); font-weight: 600; font-family: var(--font-body); margin-bottom: var(--space-2); }
+.usecase-card p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; }
+.services-list { display: flex; flex-direction: column; gap: var(--space-3); }
+.service-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--space-8); padding: var(--space-5) var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); transition: all var(--transition); }
+.service-row:hover { border-color: rgba(200,169,110,0.25); background: var(--surface-2); }
+.service-row-left { display: flex; align-items: center; gap: var(--space-4); }
+.service-num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-faint); width: 28px; }
+.service-info h3 { font-size: var(--text-base); font-weight: 600; font-family: var(--font-body); margin-bottom: var(--space-1); }
+.service-info p { font-size: var(--text-sm); color: var(--text-muted); }
+.service-price { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--accent); white-space: nowrap; }
+.how-bg { background: var(--surface); }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: var(--space-6); position: relative; }
+.step { padding: var(--space-6); position: relative; }
+.step-num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--accent); margin-bottom: var(--space-4); letter-spacing: 0.1em; }
+.step h3 { font-size: var(--text-base); font-weight: 600; font-family: var(--font-body); margin-bottom: var(--space-2); }
+.step p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.65; }
+.step::after { content: ''; position: absolute; right: 0; top: 30%; height: 40%; width: 1px; background: var(--divider); }
+.step:last-child::after { display: none; }
+@media (max-width: 768px) { .step::after { display: none; } }
+.tech-grid { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.tech-badge { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); border: 1px solid var(--border); font-size: var(--text-sm); color: var(--text-muted); background: var(--surface); transition: all var(--transition); }
+.tech-badge:hover { border-color: var(--accent); color: var(--accent); }
+.tech-badge img { width: 16px; height: 16px; border-radius: 2px; }
+.terminal-wrap { background: var(--surface); border-radius: var(--radius-xl); }
+.terminal { background: #0a0a09; border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); max-width: 680px; }
+.terminal-bar { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); background: #111110; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-dot.red { background: #ff5f57; }
+.terminal-dot.yellow { background: #ffbd2e; }
+.terminal-dot.green { background: #28c840; }
+.terminal-title { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-faint); margin-left: auto; margin-right: auto; }
+.terminal-body { padding: var(--space-5); font-family: var(--font-mono); font-size: var(--text-sm); line-height: 2; }
+.terminal-line { display: flex; gap: var(--space-2); }
+.t-prompt { color: var(--green); }
+.t-cmd { color: var(--text); }
+.t-out { color: var(--text-muted); }
+.t-accent { color: var(--accent); }
+.t-cursor { display: inline-block; width: 8px; height: 1em; background: var(--accent); animation: blink 1s step-end infinite; vertical-align: text-bottom; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+.demo-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
+@media (max-width: 768px) { .demo-cols { grid-template-columns: 1fr; } }
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: var(--space-5); }
+.pricing-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: var(--space-8); position: relative; transition: all var(--transition); }
+.pricing-card:hover { border-color: rgba(200,169,110,0.2); box-shadow: var(--shadow-md); }
+.pricing-card.featured { background: var(--surface-2); border-color: rgba(200,169,110,0.3); }
+.pricing-tag { position: absolute; top: var(--space-4); right: var(--space-4); font-size: var(--text-xs); padding: 2px var(--space-3); border-radius: var(--radius-full); background: var(--accent-dim); color: var(--accent); font-weight: 600; border: 1px solid rgba(200,169,110,0.2); }
+.pricing-name { font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: var(--space-4); font-weight: 600; }
+.pricing-price { font-family: var(--font-display); font-size: var(--text-2xl); color: var(--text); margin-bottom: var(--space-1); }
+.pricing-price span { font-family: var(--font-body); font-size: var(--text-sm); color: var(--text-muted); }
+.pricing-desc { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-6); line-height: 1.6; }
+.pricing-features { list-style: none; display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-8); }
+.pricing-features li { display: flex; gap: var(--space-2); font-size: var(--text-sm); color: var(--text-muted); align-items: flex-start; }
+.pricing-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+.pricing-cta { display: block; text-align: center; padding: var(--space-3) var(--space-5); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 500; transition: all var(--transition); border: 1px solid var(--border); color: var(--text-muted); }
+.pricing-cta:hover { border-color: var(--accent); color: var(--accent); }
+.pricing-card.featured .pricing-cta { background: var(--accent); color: #0d0d0b; border-color: var(--accent); }
+.pricing-card.featured .pricing-cta:hover { background: var(--accent-hover); }
+.faq-section { background: var(--surface); }
+.faq-list { display: flex; flex-direction: column; gap: var(--space-2); max-width: var(--content-narrow); }
+.faq-item { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.faq-q { width: 100%; text-align: left; padding: var(--space-5); display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); font-size: var(--text-base); font-weight: 500; transition: color var(--transition); background: none; }
+.faq-q:hover { color: var(--accent); }
+.faq-q svg { flex-shrink: 0; color: var(--text-faint); transition: transform var(--transition); }
+.faq-item.open .faq-q svg { transform: rotate(45deg); color: var(--accent); }
+.faq-a { display: none; padding: 0 var(--space-5) var(--space-5); font-size: var(--text-sm); color: var(--text-muted); line-height: 1.75; }
+.faq-item.open .faq-a { display: block; }
+.cta-banner { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: var(--space-12) var(--space-10); text-align: center; margin-block: var(--space-8); }
+.cta-banner h2 { font-size: var(--text-2xl); margin-bottom: var(--space-4); }
+.cta-banner p { color: var(--text-muted); margin-bottom: var(--space-8); margin-inline: auto; max-width: 48ch; }
+.cta-banner .actions { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
+footer { border-top: 1px solid var(--divider); padding-block: var(--space-10); }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: var(--space-6); flex-wrap: wrap; }
+.footer-brand { font-size: var(--text-sm); color: var(--text-muted); }
+.footer-links { display: flex; gap: var(--space-6); }
+.footer-links a { font-size: var(--text-sm); color: var(--text-muted); transition: color var(--transition); }
+.footer-links a:hover { color: var(--accent); }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0; }
+</style>
+</head>
+<body>
+<a href="#main" class="sr-only" style="position:absolute;top:-100px;left:1rem;background:var(--accent);color:#0d0d0b;padding:0.5rem 1rem;border-radius:0.5rem;z-index:999;transition:top 0.2s" onfocus="this.style.top='1rem'">Skip to content</a>
+<nav>
+  <a href="#" class="nav-logo" aria-label="Rivvak AI home">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="10" height="10" rx="2" fill="currentColor" opacity="0.9"/>
+      <rect x="16" y="2" width="10" height="10" rx="2" fill="currentColor" opacity="0.5"/>
+      <rect x="2" y="16" width="10" height="10" rx="2" fill="currentColor" opacity="0.5"/>
+      <rect x="16" y="16" width="10" height="10" rx="2" fill="currentColor" opacity="0.2"/>
+    </svg>
+    Rivvak AI
+  </a>
+  <div class="nav-links" id="nav-links">
+    <a href="#use-cases">Use Cases</a>
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="nav-cta">
+    <button data-theme-toggle aria-label="Toggle theme"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    <a href="mailto:hello@rivvak.com" class="btn btn-ghost">Contact</a>
+    <a href="mailto:hello@rivvak.com?subject=AI%20Automation%20Project" class="btn btn-primary">Start a project</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+<main id="main">
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container hero-inner">
+    <div class="hero-badge"><span class="dot"></span> AI Automation Studio</div>
+    <h1>Stop doing manually<br>what <em>machines do better</em></h1>
+    <p class="hero-sub">Custom AI automations, intelligent bots, and workflow systems that run while you sleep. Built fast, built right, built by Rivvak.</p>
+    <div class="hero-actions">
+      <a href="mailto:hello@rivvak.com?subject=AI%20Automation%20Project" class="btn btn-primary btn-large">Get a free quote</a>
+      <a href="#services" class="btn btn-ghost btn-large">See what I build</a>
+    </div>
+    <div class="hero-proof reveal">
+      <div class="hero-stat"><div class="num">50+</div><div class="label">Automations shipped</div></div>
+      <div class="hero-stat"><div class="num">48h</div><div class="label">Avg delivery</div></div>
+      <div class="hero-stat"><div class="num">$0</div><div class="label">Ongoing cost for simple flows</div></div>
+      <div class="hero-stat"><div class="num">100%</div><div class="label">Custom, no bloatware</div></div>
+    </div>
+  </div>
+</section>
+<section class="usecases" id="use-cases">
+  <div class="container">
+    <p class="section-label reveal">What I automate</p>
+    <h2 class="section-title reveal">If you're doing it twice, <em>it should be automated</em></h2>
+    <p class="section-sub reveal">Real use cases across real businesses. Every one of these was built and shipped.</p>
+    <div class="usecases-grid">
+      <div class="usecase-card reveal"><svg class="usecase-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg><h3>Telegram Bots</h3><p>Command bots, notification bots, CRM bots. Anything that talks to your team or customers through Telegram.</p></div>
+      <div class="usecase-card reveal"><svg class="usecase-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg><h3>Lead Scoring & CRM</h3><p>Auto-score inbound leads, push them to the right pipeline stage, notify your team instantly.</p></div>
+      <div class="usecase-card reveal"><svg class="usecase-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><h3>Email Sequences</h3><p>Trigger-based onboarding emails, follow-ups, and re-engagement campaigns wired to real user behavior.</p></div>
+      <div class="usecase-card reveal"><svg class="usecase-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><h3>AI Content Pipelines</h3><p>GPT-powered drafting, summarization, and content transformation — triggered by webhooks or schedule.</p></div>
+      <div class="usecase-card reveal"><svg class="usecase-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><h3>API Integrations</h3><p>Connect any two tools that have an API. Stripe → Notion, Airtable → Slack, custom webhooks, anything.</p></div>
+      <div class="usecase-card reveal"><svg class="usecase-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg><h3>Reporting Dashboards</h3><p>Auto-generated weekly reports pulled from your real data — revenue, traffic, conversions — sent to your inbox.</p></div>
+    </div>
+  </div>
+</section>
+<section id="services">
+  <div class="container">
+    <p class="section-label reveal">Services & Pricing</p>
+    <h2 class="section-title reveal">Exact work, exact price</h2>
+    <p class="section-sub reveal">No retainers required. No bloated agencies. Just clean scoped work at honest rates.</p>
+    <div class="services-list reveal">
+      <div class="service-row"><div class="service-row-left"><span class="service-num">01</span><div class="service-info"><h3>Telegram Bot</h3><p>Command, notification, or CRM bot with full logic and deployment</p></div></div><span class="service-price">from $500</span></div>
+      <div class="service-row"><div class="service-row-left"><span class="service-num">02</span><div class="service-info"><h3>AI Workflow Automation</h3><p>GPT-powered pipeline — prompts, logic, triggers, output destination</p></div></div><span class="service-price">from $800</span></div>
+      <div class="service-row"><div class="service-row-left"><span class="service-num">03</span><div class="service-info"><h3>API Integration</h3><p>Two or more systems connected, synced, and reliable</p></div></div><span class="service-price">from $600</span></div>
+      <div class="service-row"><div class="service-row-left"><span class="service-num">04</span><div class="service-info"><h3>Automation Audit</h3><p>Full review of your current tools — find waste, spot opportunities</p></div></div><span class="service-price">$200 flat</span></div>
+      <div class="service-row"><div class="service-row-left"><span class="service-num">05</span><div class="service-info"><h3>Monthly Automation Retainer</h3><p>Ongoing builds, tweaks, and new flows every month</p></div></div><span class="service-price">$700/mo</span></div>
+    </div>
+  </div>
+</section>
+<section class="how-bg">
+  <div class="container">
+    <p class="section-label reveal">Process</p>
+    <h2 class="section-title reveal">From idea to running in 48 hours</h2>
+    <div class="steps">
+      <div class="step reveal"><div class="step-num">01 — BRIEF</div><h3>Tell me what you hate doing</h3><p>Describe the task, the tools involved, and the outcome you want. Takes 10 minutes.</p></div>
+      <div class="step reveal"><div class="step-num">02 — SCOPE</div><h3>I design the flow</h3><p>I map the full logic, identify edge cases, and confirm the spec before touching code.</p></div>
+      <div class="step reveal"><div class="step-num">03 — BUILD</div><h3>It gets built, tested, deployed</h3><p>Clean code, error handling, logging. I test it against your real data before handoff.</p></div>
+      <div class="step reveal"><div class="step-num">04 — DONE</div><h3>You get the keys</h3><p>Full access, documentation, and 14 days of support. It runs. You don't touch it.</p></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="demo-cols">
+      <div>
+        <p class="section-label reveal">Under the hood</p>
+        <h2 class="section-title reveal">Real code, not no-code toys</h2>
+        <p class="section-sub reveal" style="margin-bottom:var(--space-6)">Every automation is proper code — Python, Node, or whatever fits. Hosted on Vercel, Railway, or your own infra. No Zapier tax.</p>
+        <div class="tech-grid reveal">
+          <span class="tech-badge"><img src="https://cdn.simpleicons.org/python/c8a96e" alt="" width="16" height="16"> Python</span>
+          <span class="tech-badge"><img src="https://cdn.simpleicons.org/nodedotjs/c8a96e" alt="" width="16" height="16"> Node.js</span>
+          <span class="tech-badge"><img src="https://cdn.simpleicons.org/openai/c8a96e" alt="" width="16" height="16"> OpenAI</span>
+          <span class="tech-badge"><img src="https://cdn.simpleicons.org/telegram/c8a96e" alt="" width="16" height="16"> Telegram</span>
+          <span class="tech-badge"><img src="https://cdn.simpleicons.org/vercel/c8a96e" alt="" width="16" height="16"> Vercel</span>
+          <span class="tech-badge"><img src="https://cdn.simpleicons.org/postgresql/c8a96e" alt="" width="16" height="16"> PostgreSQL</span>
+          <span class="tech-badge"><img src="https://cdn.simpleicons.org/redis/c8a96e" alt="" width="16" height="16"> Redis</span>
+          <span class="tech-badge"><img src="https://cdn.simpleicons.org/stripe/c8a96e" alt="" width="16" height="16"> Stripe</span>
+          <span class="tech-badge"><img src="https://cdn.simpleicons.org/supabase/c8a96e" alt="" width="16" height="16"> Supabase</span>
+          <span class="tech-badge"><img src="https://cdn.simpleicons.org/airtable/c8a96e" alt="" width="16" height="16"> Airtable</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="terminal">
+          <div class="terminal-bar"><div class="terminal-dot red"></div><div class="terminal-dot yellow"></div><div class="terminal-dot green"></div><span class="terminal-title">rivvak-bot — production</span></div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="t-prompt">→</span><span class="t-cmd">bot.start()</span></div>
+            <div class="terminal-line"><span class="t-out">✓ Webhook registered</span></div>
+            <div class="terminal-line"><span class="t-out">✓ OpenAI client ready</span></div>
+            <div class="terminal-line"><span class="t-out">✓ DB connected (pg)</span></div>
+            <div class="terminal-line"><span class="t-prompt">→</span><span class="t-cmd">await processMessage(ctx)</span></div>
+            <div class="terminal-line"><span class="t-accent">⚡ GPT-4o responded in 340ms</span></div>
+            <div class="terminal-line"><span class="t-out">✓ Message sent to @user</span></div>
+            <div class="terminal-line"><span class="t-out">✓ Lead logged to Airtable</span></div>
+            <div class="terminal-line"><span class="t-prompt">→</span><span class="t-accent">Listening... <span class="t-cursor"></span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="pricing" style="background:var(--surface)">
+  <div class="container">
+    <p class="section-label reveal">Pricing</p>
+    <h2 class="section-title reveal">Pick the right fit</h2>
+    <p class="section-sub reveal">One-time projects or ongoing retainer. No lock-in.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card reveal"><p class="pricing-name">Quick Win</p><p class="pricing-price">$200–600 <span>one-time</span></p><p class="pricing-desc">Single automation, audit, or a simple bot. In and out fast.</p><ul class="pricing-features"><li>Single workflow or bot</li><li>2–3 day delivery</li><li>14-day support</li><li>Full documentation</li></ul><a href="mailto:hello@rivvak.com?subject=Quick%20Win%20Project" class="pricing-cta">Get started</a></div>
+      <div class="pricing-card featured reveal"><span class="pricing-tag">Most popular</span><p class="pricing-name">Full Build</p><p class="pricing-price">$800–2,000 <span>one-time</span></p><p class="pricing-desc">Complex automation with multiple systems, AI logic, and full deployment.</p><ul class="pricing-features"><li>Multi-system integration</li><li>AI-powered logic</li><li>Error handling & logging</li><li>Custom dashboard (optional)</li><li>30-day support</li><li>Handoff call included</li></ul><a href="mailto:hello@rivvak.com?subject=Full%20Build%20Project" class="pricing-cta">Start a project</a></div>
+      <div class="pricing-card reveal"><p class="pricing-name">Retainer</p><p class="pricing-price">$700 <span>/month</span></p><p class="pricing-desc">Ongoing automation work every month. New flows, tweaks, maintenance.</p><ul class="pricing-features"><li>~10 hours/month</li><li>Priority response</li><li>New automations each month</li><li>Monitoring & maintenance</li><li>Monthly strategy call</li></ul><a href="mailto:hello@rivvak.com?subject=Retainer%20Inquiry" class="pricing-cta">Let's talk</a></div>
+    </div>
+  </div>
+</section>
+<section class="faq-section" id="faq">
+  <div class="container">
+    <p class="section-label reveal">FAQ</p>
+    <h2 class="section-title reveal">Common questions</h2>
+    <div class="faq-list">
+      <div class="faq-item reveal"><button class="faq-q">Do I need technical knowledge to use what you build? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">No. The automation runs in the background. You interact with it through familiar interfaces — Telegram, email, a web dashboard, or a spreadsheet. You never need to touch the code.</div></div>
+      <div class="faq-item reveal"><button class="faq-q">What tools do you connect to? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Anything with an API. Most commonly: Telegram, Slack, Notion, Airtable, Stripe, Shopify, Google Sheets, OpenAI, Supabase, PostgreSQL, Twilio, Mailgun, and more. If it has a webhook or REST API, I can connect to it.</div></div>
+      <div class="faq-item reveal"><button class="faq-q">How fast can you deliver? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Simple automations ship in 24–48 hours. Complex multi-system builds typically take 3–5 business days. I'll give you a firm timeline after reviewing your scope, and I don't miss it.</div></div>
+      <div class="faq-item reveal"><button class="faq-q">What happens if something breaks? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Every build includes error handling, logging, and alerts. Quick Win projects include 14 days of free fixes; Full Builds include 30 days. Retainer clients get ongoing monitoring and same-day response.</div></div>
+      <div class="faq-item reveal"><button class="faq-q">Can I own the code? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Yes. Full ownership. You get the source code, deployment credentials, and everything needed to run and modify it yourself. No vendor lock-in, no ongoing platform fees to me.</div></div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="cta-banner reveal">
+      <h2>Ready to automate the boring stuff?</h2>
+      <p>Tell me what you're doing manually that shouldn't be. I'll tell you how to stop doing it.</p>
+      <div class="actions">
+        <a href="mailto:hello@rivvak.com?subject=AI%20Automation%20Inquiry" class="btn btn-primary btn-large">Email hello@rivvak.com</a>
+        <a href="../" class="btn btn-ghost btn-large" target="_blank" rel="noopener noreferrer">Back to Rivvak</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="container footer-inner">
+    <p class="footer-brand">© 2026 Rivvak AI. Built by <a href="https://github.com/mrh0ql" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">@mrh0ql</a></p>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="mailto:hello@rivvak.com">Contact</a>
+      <a href="../">Rivvak Hub</a>
+      <a href="https://github.com/mrh0ql" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </div>
+</footer>
+<script>
+(function(){
+  const r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  const t=document.querySelector('[data-theme-toggle]');
+  if(t) t.addEventListener('click',()=>{
+    d=d==='dark'?'light':'dark';
+    r.setAttribute('data-theme',d);
+    t.innerHTML=d==='dark'
+      ?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+      :'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  });
+  const ham=document.getElementById('hamburger');
+  const nav=document.getElementById('nav-links');
+  if(ham) ham.addEventListener('click',()=>{
+    const open=nav.classList.toggle('open');
+    ham.setAttribute('aria-expanded',open);
+  });
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  document.querySelectorAll('.faq-q').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item=btn.closest('.faq-item');
+      const wasOpen=item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>
